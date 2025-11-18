@@ -1,0 +1,4 @@
+17:21:43.758 [JavaFX Application Thread] INFO  fr.esir.omd.ci.TaskManager -- Nouvelle tâche ajoutée todo
+17:21:43.775 [JavaFX Application Thread] DEBUG fr.esir.omd.ci.TaskManager -- Récupération de la liste des 1 tâches
+17:22:10.301 [JavaFX Application Thread] INFO  fr.esir.omd.ci.TaskManager -- Nouvelle tâche ajoutée todo
+17:22:10.305 [JavaFX Application Thread] DEBUG fr.esir.omd.ci.TaskManager -- Récupération de la liste des 2 tâches
