@@ -65,6 +65,10 @@
     </dependency>
 
   </dependencies>
+    <scm>
+        <connection>scm:git:https://your-git-server.com/your-repo.git</connection>
+        <url>https://your-git-server.com/your-repo</url>
+    </scm>
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -122,6 +126,61 @@
                 <mainClass>fr.esir.omd.ci.App</mainClass>
             </configuration> 
         </plugin>
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.12</version>
+            <executions>
+                <execution>
+                    <id>default-prepare-agent</id>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                    <configuration>
+                        <destFile>target/jacoco.exec</destFile>
+                    </configuration>
+                </execution> 
+                <execution>
+                    <id>report</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                    <configuration>
+                        <dataFile>target/jacoco.exec</dataFile>
+                        <outputDirectory>target/jacoco-report</outputDirectory>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <!-- Plugin SCM -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>2.1.0</version>
+            </plugin>
+            <!-- Plugin changelog -->
+            <plugin>
+                <groupId>se.bjurr.gitchangelog</groupId>
+                <artifactId>git-changelog-maven-plugin</artifactId>
+                <version>2.2.0</version>
+                <executions>
+                    <!-- Template from file // -->
+                    <execution>
+                        <id>GenerateGitChangelogTemplateFromFile</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>git-changelog</goal>
+                        </goals>
+                        <configuration>
+                            <useIntegrations>true</useIntegrations>
+                            <templateFile>src/main/resources/changelog.mustache</templateFile>
+                            <readableTagName>-([^-]+?)$</readableTagName>
+                            <file>CHANGELOG.md</file>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -142,6 +201,28 @@
           <artifactId>maven-jxr-plugin</artifactId>  
           <version>3.0.0</version>
       </plugin>
+      <plugin>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<reportSets>
+				<reportSet>
+					<reports>
+						<!-- select non-aggregate reports -->
+						<report>report</report>
+					</reports>
+				</reportSet>
+			</reportSets>
+		</plugin>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.26.0</version>
+        <configuration>
+            <linkXref>true</linkXref>
+            <minimumTokens>100</minimumTokens>
+        </configuration>
+    </plugin>
+
   </plugins>
 </reporting>
 </project>
